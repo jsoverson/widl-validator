@@ -15,7 +15,7 @@
     const textarea = document.getElementById("codemirror-textarea");
     textarea.value = value;
 
-    window.cm = cm = CodeMirror.fromTextArea(textarea, {
+    cm = CodeMirror.fromTextArea(textarea, {
       lineNumbers: true,
     });
     cm.getWrapperElement();

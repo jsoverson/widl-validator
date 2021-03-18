@@ -1,47 +1,65 @@
 <script>
-  import { onMount, getContext } from "svelte";
+  import { onMount } from "svelte";
 
   import JSONTree from "svelte-json-tree";
   import TabBar from "@smui/tab-bar";
   import Tab from "@smui/tab";
+  import Select, { Option } from "@smui/select";
 
   import Editor from "./Editor.svelte";
-  // import Codeview, { CODEVIEW } from "./Codeview.svelte";
+  import Codeview from "./Codeview.svelte";
 
-  import { parse } from "../widl-js/dist/cjs/index";
+  // import { parse, Writer, Context } from "../widl-js/dist/cjs/index";
+
+  import {
+    ModuleVisitor as RustModuleVisitor,
+    ScaffoldVisitor as RustScaffoldVisitor,
+  } from "widl-codegen/language/rust/index.js";
+  import { parse, Writer, Context } from "widl-codegen/widl/index.js";
 
   import defaultSample from "./default-sample.js";
   export let name = "Widl-Validator";
 
-  // const { updateCodeview } = getContext(CODEVIEW);
-
   let editorValue = defaultSample;
+  let codegenValue = "";
 
+  let parsedWidlDoc = null;
   let ast = {};
   let codegen = "";
-  let mode;
-  let activeTab = "AST";
+  let mode = "rust";
+  let activeTab = "Codegen";
+  let codeview;
 
   function onChange(evt) {
-    updateAst(evt.detail.source);
-    updateCodegen();
+    editorValue = evt.detail.source;
+    updateAst(editorValue);
+    updateCodegen(editorValue);
   }
 
   onMount(() => {
     updateAst(editorValue);
+    updateCodegen(editorValue);
   });
 
-  function updateCodegen() {
-    // updateCodeview(editorValue, mode);
+  function updateCodegen(editorValue) {
+    const writer = new Writer();
+    const context = new Context({
+      import: "github.com/wapc/languages-tests/tinygo/module",
+      module: "module",
+    });
+    const visitor = new RustModuleVisitor(writer);
+    parsedWidlDoc.accept(context, visitor);
+    let source = writer.string();
+    codegenValue = source;
   }
 
   function updateAst(src) {
     try {
-      const parsed = parse(src, { noLocation: true });
+      parsedWidlDoc = parse(src, { noLocation: true });
       // svelte-json-tree doesn't render constructors well, so we have to
       // force the ast into a POJSO until we replace or fix the component.
       ast = JSON.parse(
-        JSON.stringify(parsed, (k, v) =>
+        JSON.stringify(parsedWidlDoc, (k, v) =>
           Array.isArray(v) && v.length == 0 ? undefined : v
         )
       );
@@ -65,13 +83,23 @@
       </div>
     </div>
     <div class="right-panel">
-      <div class="tabs">
-        <TabBar tabs={["AST", "Codegen"]} let:tab bind:active={activeTab}>
-          <Tab {tab}>
-            <h3>{tab}</h3>
-          </Tab>
-        </TabBar>
+      <div class="invalid-overlay" class:visible={ast.error}>
+        <div class="bg" />
+        <div class="error">
+          <h3>Error: {ast.error}</h3>
+          <h4>Error: {ast.message}</h4>
+        </div>
       </div>
+      <div class="panel-header">
+        <div class="tabs">
+          <TabBar tabs={["Codegen", "AST"]} let:tab bind:active={activeTab}>
+            <Tab {tab}>
+              <h3>{tab}</h3>
+            </Tab>
+          </TabBar>
+        </div>
+      </div>
+
       <div class="panel-content">
         <div class="tab-panels">
           <div class="panel" class:selected={activeTab === "AST"}>
@@ -81,9 +109,21 @@
               <JSONTree value={ast} />
             </div>
           </div>
-          <div class="panel" class:selected={activeTab === "Codegen"}>
-            [Not implemented yet]
-            <!-- <Codeview /> -->
+          <div
+            class="panel full-width"
+            class:selected={activeTab === "Codegen"}
+          >
+            <Select
+              variant="filled"
+              value="rust"
+              menu$class="codegen-select"
+              anchor$class="codegen-select"
+            >
+              <Option value="rust">Rust</Option>
+              <!-- <Option value="go">Go</Option>
+              <Option value="javascript">AsmScript(TypeScript)</Option> -->
+            </Select>
+            <Codeview bind:this={codeview} value={codegenValue} {mode} />
           </div>
         </div>
       </div>
@@ -121,7 +161,38 @@
   .panel-content {
     height: 100%;
   }
-  .tabs {
+  .right-panel .panel-header {
     height: 60px;
+    position: relative;
+  }
+  .invalid-overlay {
+    z-index: 100000;
+    position: absolute;
+    width: 50%;
+    display: none;
+    height: 100%;
+  }
+  .invalid-overlay .bg {
+    background-color: red;
+    opacity: 50%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+  }
+  .visible {
+    display: block;
+  }
+  .error {
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    text-align: center;
+    margin-top: 5em;
+    width: 100%;
+  }
+
+  * :global(.codegen-select) {
+    width: 100%;
   }
 </style>

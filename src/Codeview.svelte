@@ -1,9 +1,5 @@
-<script context="module">
-  export const CODEVIEW = {};
-</script>
-
 <script>
-  import { onMount, setContext } from "svelte";
+  import { onMount } from "svelte";
   import CodeMirror from "codemirror";
   import { createEventDispatcher } from "svelte";
 
@@ -18,24 +14,25 @@
   export let value;
   export let mode;
 
+  function updateCodemirror() {
+    if (cm) cm.getDoc().setValue(value);
+  }
+
+  $: updateCodemirror(value);
+
   onMount(() => {
     const textarea = document.getElementById("codeview");
     textarea.value = value;
 
-    window.cm = cm = CodeMirror.fromTextArea(textarea, {
-      lineNumbers: true,
+    cm = CodeMirror.fromTextArea(textarea, {
+      lineNumbers: false,
       readonly: true,
       mode: mode,
     });
-    cm.getWrapperElement();
+
+    updateCodemirror(value);
 
     cm.setSize("auto", "100%");
-  });
-  setContext(CODEVIEW, {
-    updateCodeview(src, mode) {
-      cm.setOption("mode", mode);
-      cm.getDoc().setValue(src);
-    },
   });
 </script>
 
