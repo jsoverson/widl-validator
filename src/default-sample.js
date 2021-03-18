@@ -1,0 +1,20 @@
+export default `namespace "core"
+
+interface {
+  HealthRequest{request: HealthCheckRequest}: HealthCheckResponse
+}
+
+type CapabilityConfiguration {
+  module: string
+  values: {string:string}
+}
+
+type HealthCheckRequest {
+  placeholder: bool
+}
+
+type HealthCheckResponse {
+  healthy: bool
+  message: string
+}
+`;

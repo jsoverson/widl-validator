@@ -1,0 +1,4 @@
+[submodule "widl-js"]
+	path = widl-js
+	url = https://github.com/wapc/widl-js.git
+	branch = initial_version
