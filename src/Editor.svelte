@@ -26,11 +26,6 @@
       dispatch("change", { source: cm.getValue() });
     });
   });
-
-  function formatCode(node) {
-    const src = "codegen";
-    return src;
-  }
 </script>
 
 <div class="code">

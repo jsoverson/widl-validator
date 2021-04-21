@@ -14,8 +14,10 @@
   import {
     ModuleVisitor as RustModuleVisitor,
     ScaffoldVisitor as RustScaffoldVisitor,
-  } from "widl-codegen/language/rust/index.js";
-  import { parse, Writer, Context } from "widl-codegen/widl/index.js";
+  } from "@wapc/widl-codegen/rust";
+  import { parse, ast as AST } from "@wapc/widl";
+
+  const { Writer, Context } = AST;
 
   import defaultSample from "./default-sample.js";
   export let name = "Widl-Validator";
@@ -134,9 +136,12 @@
 <style>
   h1 {
     color: black;
+    margin-top: 0;
   }
   .app {
     height: 100%;
+    max-height: 100%;
+    /* overflow: hidden; */
   }
   header {
     height: 3em;
@@ -145,7 +150,7 @@
     font-family: monospace;
   }
   .content {
-    height: calc(100vh - 100px);
+    height: calc(100% - 3em);
     display: grid;
     grid-template-columns: 50% 50%;
   }
@@ -155,12 +160,16 @@
   .selected {
     display: block !important;
   }
-  .invalid {
-    background-color: rgb(255, 158, 158);
-  }
   .panel-content {
     height: 100%;
+    overflow: auto;
   }
+  .left-panel,
+  .right-panel {
+    height: 100%;
+    overflow: hidden;
+  }
+
   .right-panel .panel-header {
     height: 60px;
     position: relative;
