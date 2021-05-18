@@ -9,12 +9,19 @@
   import Editor from "./Editor.svelte";
   import Codeview from "./Codeview.svelte";
 
-  // import { parse, Writer, Context } from "../widl-js/dist/cjs/index";
-
   import {
     ModuleVisitor as RustModuleVisitor,
     ScaffoldVisitor as RustScaffoldVisitor,
   } from "@wapc/widl-codegen/rust";
+  import {
+    ModuleVisitor as TinyGoModuleVisitor,
+    ScaffoldVisitor as TinyGoScaffoldVisitor,
+  } from "@wapc/widl-codegen/tinygo";
+  import {
+    ModuleVisitor as AssemblyScriptModuleVisitor,
+    ScaffoldVisitor as AssemblyScriptScaffoldVisitor,
+  } from "@wapc/widl-codegen/assemblyscript";
+
   import { parse, ast as AST } from "@wapc/widl";
 
   const { Writer, Context } = AST;
@@ -24,49 +31,77 @@
 
   let editorValue = defaultSample;
   let codegenValue = "";
+  let selectEl;
 
   let parsedWidlDoc = null;
   let ast = {};
-  let codegen = "";
   let mode = "rust";
   let activeTab = "Codegen";
   let codeview;
 
   function onChange(evt) {
-    editorValue = evt.detail.source;
-    updateAst(editorValue);
-    updateCodegen(editorValue);
+    update(evt.detail.source);
+  }
+
+  function onLangChange(evt) {
+    update(editorValue);
   }
 
   onMount(() => {
-    updateAst(editorValue);
-    updateCodegen(editorValue);
+    update(editorValue);
+    selectEl.$on("MDCSelect:change", () => {
+      update(editorValue);
+    });
   });
 
-  function updateCodegen(editorValue) {
+  function update(src) {
+    console.log(mode);
+
+    try {
+      parsedWidlDoc = parse(src, { noLocation: true });
+      // svelte-json-tree doesn't render constructors well, so we have to
+      // force the ast into a POJSO until we replace or fix the component.
+      ast = parseAst(parsedWidlDoc);
+    } catch (e) {
+      ast = { error: "Error parsing widl", message: e.message };
+    }
+
+    codegenValue = updateCodegen(parsedWidlDoc);
+  }
+
+  function updateCodegen(parsedWidlDoc) {
+    console.log(mode);
     const writer = new Writer();
     const context = new Context({
       import: "github.com/wapc/languages-tests/tinygo/module",
       module: "module",
     });
-    const visitor = new RustModuleVisitor(writer);
+
+    const visitor = ((mode) => {
+      switch (mode) {
+        case "rust":
+          return new RustModuleVisitor(writer);
+        case "tinygo":
+          return new TinyGoModuleVisitor(writer);
+        case "assemblyscript":
+          return new AssemblyScriptModuleVisitor(writer);
+      }
+    })(mode);
     parsedWidlDoc.accept(context, visitor);
-    let source = writer.string();
-    codegenValue = source;
+    return writer.string();
   }
 
-  function updateAst(src) {
+  function parseAst(doc) {
     try {
-      parsedWidlDoc = parse(src, { noLocation: true });
       // svelte-json-tree doesn't render constructors well, so we have to
       // force the ast into a POJSO until we replace or fix the component.
-      ast = JSON.parse(
-        JSON.stringify(parsedWidlDoc, (k, v) =>
+      return JSON.parse(
+        JSON.stringify(doc, (k, v) =>
           Array.isArray(v) && v.length == 0 ? undefined : v
         )
       );
     } catch (e) {
-      ast = { error: "Error parsing widl", message: e.message };
+      return { error: "Error parsing widl", message: e.message };
     }
   }
 </script>
@@ -116,14 +151,16 @@
             class:selected={activeTab === "Codegen"}
           >
             <Select
+              bind:this={selectEl}
               variant="filled"
-              value="rust"
+              bind:value={mode}
               menu$class="codegen-select"
               anchor$class="codegen-select"
+              on:change={onLangChange}
             >
               <Option value="rust">Rust</Option>
-              <!-- <Option value="go">Go</Option>
-              <Option value="javascript">AsmScript(TypeScript)</Option> -->
+              <Option value="tinygo">TinyGo</Option>
+              <Option value="assemblyscript">AssemblyScript</Option>
             </Select>
             <Codeview bind:this={codeview} value={codegenValue} {mode} />
           </div>
@@ -201,7 +238,7 @@
     width: 100%;
   }
 
-  * :global(.codegen-select) {
+  * :global(.mdc-select) {
     width: 100%;
   }
 </style>
