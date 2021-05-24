@@ -58,7 +58,7 @@
     console.log(mode);
 
     try {
-      parsedWidlDoc = parse(src, { noLocation: true });
+      parsedWidlDoc = parse(src, undefined, { noLocation: true });
       // svelte-json-tree doesn't render constructors well, so we have to
       // force the ast into a POJSO until we replace or fix the component.
       ast = parseAst(parsedWidlDoc);
@@ -70,7 +70,6 @@
   }
 
   function updateCodegen(parsedWidlDoc) {
-    console.log(mode);
     const writer = new Writer();
     const context = new Context({
       import: "github.com/wapc/languages-tests/tinygo/module",

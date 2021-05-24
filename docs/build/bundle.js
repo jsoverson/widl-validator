@@ -41211,7 +41211,7 @@ type HealthCheckResponse {
     const { console: console_1 } = globals;
     const file = "src/App.svelte";
 
-    // (133:12) <Tab {tab}>
+    // (132:12) <Tab {tab}>
     function create_default_slot_5(ctx) {
     	let h3;
     	let t_value = /*tab*/ ctx[20] + "";
@@ -41222,7 +41222,7 @@ type HealthCheckResponse {
     			h3 = element("h3");
     			t = text(t_value);
     			attr_dev(h3, "class", "svelte-q525l7");
-    			add_location(h3, file, 133, 14, 3623);
+    			add_location(h3, file, 132, 14, 3611);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h3, anchor);
@@ -41240,14 +41240,14 @@ type HealthCheckResponse {
     		block,
     		id: create_default_slot_5.name,
     		type: "slot",
-    		source: "(133:12) <Tab {tab}>",
+    		source: "(132:12) <Tab {tab}>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (132:10) <TabBar tabs={["Codegen", "AST"]} let:tab bind:active={activeTab}>
+    // (131:10) <TabBar tabs={["Codegen", "AST"]} let:tab bind:active={activeTab}>
     function create_default_slot_4(ctx) {
     	let tab;
     	let current;
@@ -41297,14 +41297,14 @@ type HealthCheckResponse {
     		block,
     		id: create_default_slot_4.name,
     		type: "slot",
-    		source: "(132:10) <TabBar tabs={[\\\"Codegen\\\", \\\"AST\\\"]} let:tab bind:active={activeTab}>",
+    		source: "(131:10) <TabBar tabs={[\\\"Codegen\\\", \\\"AST\\\"]} let:tab bind:active={activeTab}>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (161:14) <Option value="rust">
+    // (160:14) <Option value="rust">
     function create_default_slot_3(ctx) {
     	let t;
 
@@ -41324,14 +41324,14 @@ type HealthCheckResponse {
     		block,
     		id: create_default_slot_3.name,
     		type: "slot",
-    		source: "(161:14) <Option value=\\\"rust\\\">",
+    		source: "(160:14) <Option value=\\\"rust\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (162:14) <Option value="tinygo">
+    // (161:14) <Option value="tinygo">
     function create_default_slot_2(ctx) {
     	let t;
 
@@ -41351,14 +41351,14 @@ type HealthCheckResponse {
     		block,
     		id: create_default_slot_2.name,
     		type: "slot",
-    		source: "(162:14) <Option value=\\\"tinygo\\\">",
+    		source: "(161:14) <Option value=\\\"tinygo\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (163:14) <Option value="assemblyscript">
+    // (162:14) <Option value="assemblyscript">
     function create_default_slot_1(ctx) {
     	let t;
 
@@ -41378,14 +41378,14 @@ type HealthCheckResponse {
     		block,
     		id: create_default_slot_1.name,
     		type: "slot",
-    		source: "(163:14) <Option value=\\\"assemblyscript\\\">",
+    		source: "(162:14) <Option value=\\\"assemblyscript\\\">",
     		ctx
     	});
 
     	return block;
     }
 
-    // (153:12) <Select               bind:this={selectEl}               variant="filled"               bind:value={mode}               menu$class="codegen-select"               anchor$class="codegen-select"               on:change={onLangChange}             >
+    // (152:12) <Select               bind:this={selectEl}               variant="filled"               bind:value={mode}               menu$class="codegen-select"               anchor$class="codegen-select"               on:change={onLangChange}             >
     function create_default_slot(ctx) {
     	let option0;
     	let t0;
@@ -41486,7 +41486,7 @@ type HealthCheckResponse {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(153:12) <Select               bind:this={selectEl}               variant=\\\"filled\\\"               bind:value={mode}               menu$class=\\\"codegen-select\\\"               anchor$class=\\\"codegen-select\\\"               on:change={onLangChange}             >",
+    		source: "(152:12) <Select               bind:this={selectEl}               variant=\\\"filled\\\"               bind:value={mode}               menu$class=\\\"codegen-select\\\"               anchor$class=\\\"codegen-select\\\"               on:change={onLangChange}             >",
     		ctx
     	});
 
@@ -41656,53 +41656,53 @@ type HealthCheckResponse {
     			create_component(codeview_1.$$.fragment);
     			attr_dev(a, "href", "https://github.com/jsoverson/widl-validator");
     			attr_dev(a, "class", "svelte-q525l7");
-    			add_location(a, file, 111, 6, 2877);
+    			add_location(a, file, 110, 6, 2865);
     			attr_dev(h1, "class", "svelte-q525l7");
-    			add_location(h1, file, 110, 4, 2866);
+    			add_location(h1, file, 109, 4, 2854);
     			attr_dev(header, "class", "svelte-q525l7");
-    			add_location(header, file, 109, 2, 2853);
+    			add_location(header, file, 108, 2, 2841);
     			set_style(h30, "text-align", "center");
     			attr_dev(h30, "class", "svelte-q525l7");
-    			add_location(h30, file, 116, 6, 3032);
+    			add_location(h30, file, 115, 6, 3020);
     			attr_dev(div0, "class", "panel-content svelte-q525l7");
-    			add_location(div0, file, 117, 6, 3078);
+    			add_location(div0, file, 116, 6, 3066);
     			attr_dev(div1, "class", "left-panel svelte-q525l7");
-    			add_location(div1, file, 115, 4, 3001);
+    			add_location(div1, file, 114, 4, 2989);
     			attr_dev(div2, "class", "bg svelte-q525l7");
-    			add_location(div2, file, 123, 8, 3295);
+    			add_location(div2, file, 122, 8, 3283);
     			attr_dev(h31, "class", "svelte-q525l7");
-    			add_location(h31, file, 125, 10, 3352);
+    			add_location(h31, file, 124, 10, 3340);
     			attr_dev(h4, "class", "svelte-q525l7");
-    			add_location(h4, file, 126, 10, 3390);
+    			add_location(h4, file, 125, 10, 3378);
     			attr_dev(div3, "class", "error svelte-q525l7");
-    			add_location(div3, file, 124, 8, 3322);
+    			add_location(div3, file, 123, 8, 3310);
     			attr_dev(div4, "class", "invalid-overlay svelte-q525l7");
     			toggle_class(div4, "visible", /*ast*/ ctx[3].error);
-    			add_location(div4, file, 122, 6, 3231);
+    			add_location(div4, file, 121, 6, 3219);
     			attr_dev(div5, "class", "tabs svelte-q525l7");
-    			add_location(div5, file, 130, 8, 3489);
+    			add_location(div5, file, 129, 8, 3477);
     			attr_dev(div6, "class", "panel-header svelte-q525l7");
-    			add_location(div6, file, 129, 6, 3454);
+    			add_location(div6, file, 128, 6, 3442);
     			set_style(div7, "--json-tree-font-size", "13px");
     			set_style(div7, "--json-tree-font-family", "monospace");
     			attr_dev(div7, "class", "svelte-q525l7");
-    			add_location(div7, file, 142, 12, 3852);
+    			add_location(div7, file, 141, 12, 3840);
     			attr_dev(div8, "class", "panel svelte-q525l7");
     			toggle_class(div8, "selected", /*activeTab*/ ctx[5] === "AST");
-    			add_location(div8, file, 141, 10, 3783);
+    			add_location(div8, file, 140, 10, 3771);
     			attr_dev(div9, "class", "panel full-width svelte-q525l7");
     			toggle_class(div9, "selected", /*activeTab*/ ctx[5] === "Codegen");
-    			add_location(div9, file, 148, 10, 4042);
+    			add_location(div9, file, 147, 10, 4030);
     			attr_dev(div10, "class", "tab-panels svelte-q525l7");
-    			add_location(div10, file, 140, 8, 3748);
+    			add_location(div10, file, 139, 8, 3736);
     			attr_dev(div11, "class", "panel-content svelte-q525l7");
-    			add_location(div11, file, 139, 6, 3712);
+    			add_location(div11, file, 138, 6, 3700);
     			attr_dev(div12, "class", "right-panel svelte-q525l7");
-    			add_location(div12, file, 121, 4, 3199);
+    			add_location(div12, file, 120, 4, 3187);
     			attr_dev(main, "class", "content svelte-q525l7");
-    			add_location(main, file, 114, 2, 2974);
+    			add_location(main, file, 113, 2, 2962);
     			attr_dev(div13, "class", "app svelte-q525l7");
-    			add_location(div13, file, 108, 0, 2833);
+    			add_location(div13, file, 107, 0, 2821);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -41896,7 +41896,7 @@ type HealthCheckResponse {
     		console.log(mode);
 
     		try {
-    			parsedWidlDoc = cjs.parse(src, { noLocation: true });
+    			parsedWidlDoc = cjs.parse(src, undefined, { noLocation: true });
 
     			// svelte-json-tree doesn't render constructors well, so we have to
     			// force the ast into a POJSO until we replace or fix the component.
@@ -41912,7 +41912,6 @@ type HealthCheckResponse {
     	}
 
     	function updateCodegen(parsedWidlDoc) {
-    		console.log(mode);
     		const writer = new Writer();
 
     		const context = new Context({
