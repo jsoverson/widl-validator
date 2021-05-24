@@ -29,7 +29,9 @@
   import defaultSample from "./default-sample.js";
   export let name = "Widl-Validator";
 
-  let editorValue = defaultSample;
+  let hashValue = location.hash ? atob(location.hash.slice(1)) : "";
+
+  let editorValue = hashValue || defaultSample;
   let codegenValue = "";
   let selectEl;
 
@@ -55,13 +57,12 @@
   });
 
   function update(src) {
-    console.log(mode);
-
     try {
       parsedWidlDoc = parse(src, undefined, { noLocation: true });
       // svelte-json-tree doesn't render constructors well, so we have to
       // force the ast into a POJSO until we replace or fix the component.
       ast = parseAst(parsedWidlDoc);
+      location.hash = btoa(src);
     } catch (e) {
       ast = { error: "Error parsing widl", message: e.message };
     }

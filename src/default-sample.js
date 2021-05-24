@@ -1,20 +1,40 @@
-export default `namespace "core"
+export default `namespace "example:widl"
 
 interface {
-  HealthRequest{request: HealthCheckRequest}: HealthCheckResponse
+  sayHello(message:string): string
 }
 
-type CapabilityConfiguration {
-  module: string
-  values: {string:string}
+type AllTypes {
+  i8: i8
+  u8: u8
+  i16: i16
+  u16: u16
+  i32: i32
+  u32: u32
+  i64: i64
+  u64: u64
+  f32: f32
+  f64: f64
+  bool: bool
+  string: string
+  datetime: datetime
+  bytes: bytes
+  raw: raw
+  value: value
+  optional: bool?
+  map: {string:string}
+  array: [string]
+  richtype: OtherType
+  enum: EnumType
 }
 
-type HealthCheckRequest {
-  placeholder: bool
+type OtherType {
+  data: u8
 }
 
-type HealthCheckResponse {
-  healthy: bool
-  message: string
+enum EnumType {
+  first = 0 "First"
+  second = 1 "Second"
+  third = 2 "Third"
 }
 `;
